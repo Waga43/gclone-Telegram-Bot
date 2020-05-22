@@ -19,11 +19,11 @@ def start(update, context):
 
 def help(update, context):
 	update.message.reply_text('/start- To Start the Bot \n /help- To Know About the Commands \n '
-	'/rclone [COMMAND]- To Run Shell or Rclone Command (except copy) \n'
-	'/rclonecopy [COMMAND]- To Copy Files \n'
+	'/gclone [COMMAND]- To Run Shell or gclone Command (except copy) \n'
+	'/gclonecopy [COMMAND]- To Copy Files \n'
 	'/folder- To Inline View of Folder in Drive \n'
 	'/password [PASSWORD]- To Get Authorize \n'
-	'/adminpasswprd [Password]- To authorize to use rclone and rclonecopy \n'
+	'/adminpasswprd [Password]- To authorize to use gclone and gclonecopy \n'
 	'/backup- to create backup to other drive \n')
 
 
@@ -55,7 +55,7 @@ def folder(update, context):
 	if os.path.exists("link.txt") == True :
 		os.remove("link.txt")
 	f=open("adress.txt","w")
-	command='____________RCLONE COMMAND FOR FOLDER VIEW______________'
+	command='____________gclone COMMAND FOR FOLDER VIEW______________'
 	f.write(command)
 	f.close()
 	f=open("link.txt","w")
@@ -169,9 +169,9 @@ def adduA(update, context, Uid):
 	print(f.readlines())
 
 
-def rclone(update, context):
+def gclone(update, context):
 	txt=update.message.text 
-	if "/rclone" == txt.strip()[:7]:
+	if "/gclone" == txt.strip()[:7]:
 		command = " ".join(txt.strip().split(" ")[1:])
 	else :
 		update.message.reply_text("Enter Correct Command")  
@@ -185,22 +185,22 @@ def rclone(update, context):
 		update.message.reply_text("Enter Admin Password!")
 
 
-def rclonecopy(update, context):
+def gclonecopy(update, context):
 	txt=update.message.text 
-	if "/rclonecopy" == txt.strip()[:11]:
+	if "/gclonecopy" == txt.strip()[:11]:
 		command = " ".join(txt.strip().split(" ")[1:])
 	else :
 		update.message.reply_text("Enter Correct Command")  
 	inID=update.message.from_user.id
 	checkuA(update, context, inID)
 	if flagA == True :
-		rclonecopyprocess(update, context, command)
+		gclonecopyprocess(update, context, command)
 	else:
 		update.message.reply_text("Enter Admin Password!")
 	update.message.reply_text("Done!!")
 
 
-def rclonecopyprocess(update, context, command):
+def gclonecopyprocess(update, context, command):
 	bot = context.bot
 	message=update.message.reply_text("STATUS")
 	mid=message.message_id
@@ -281,7 +281,7 @@ def backup(update, context):
 	checkuA(update, context, inID)
 	today=date.today()
 	if flagA == True :
-		rclonecopyprocess(update, context, '________RCLONE COMMAND TO CREATE BACKUP______________')
+		gclonecopyprocess(update, context, '________gclone COMMAND TO CREATE BACKUP______________')
 		
 	else:
 		update.message.reply_text("Enter Admin Password!")
@@ -324,8 +324,8 @@ def main():
 	dp = updater.dispatcher
 	dp.add_handler(CommandHandler("start", start))
 	dp.add_handler(CommandHandler("help", help))
-	dp.add_handler(CommandHandler("rclone", rclone))
-	dp.add_handler(CommandHandler("rclonecopy", rclonecopy))
+	dp.add_handler(CommandHandler("gclone", gclone))
+	dp.add_handler(CommandHandler("gclonecopy", gclonecopy))
 	dp.add_handler(CommandHandler("password", password))
 	dp.add_handler(CommandHandler("adminpassword", adminpassword))
 	dp.add_handler(CommandHandler("folder", folder))
